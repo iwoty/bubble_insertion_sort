@@ -52,7 +52,7 @@ def insertion_sort(numbers):
     pass
 
 
-def sort_data(sort_type='bubble', amount_data):
+def sort_data(amount_data, sort_type='bubble'):
     """
     Parameters
     ----------
@@ -66,7 +66,7 @@ def sort_data(sort_type='bubble', amount_data):
     pass
 
 
-def get_computing_time(computing_type='import data', amount_data):
+def get_computing_time(amount_data, computing_type='import data'):
     """
     Parameters
     ----------
