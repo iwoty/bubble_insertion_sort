@@ -25,12 +25,14 @@ def read_data(amount_data):
     try:
         path_to_file = ('/home/iwotyszkowski/codecool/python/bubble_insertion_sort/data_to_sort/'
                         + possible_amount[amount_data] + '.csv')
+
         with open(path_to_file, 'r') as f:
             reader = csv.reader(f, delimiter=',')
             numbers = []
             for row in reader:
                 numbers.append(int(row[0]))     # [0] beacause csv has column in every row -it would create nested list
         return numbers
+
     except FileNotFoundError:
         return '(FileNotFoundError) Missing file.'
     except KeyError:
@@ -51,7 +53,20 @@ def save_data(numbers):
     None
 
     """
-    pass
+    possible_amount = {1000: 'one_thousand',
+                       10000: 'ten_thousand',
+                       50000: 'fifty_thousand',
+                       100000: 'one_hundred_thousand',
+                       500000: 'five_hundred_thousand',
+                       1000000: 'one_million',
+                       3000000: 'three_millions'}
+
+    path_to_file = ('/home/iwotyszkowski/codecool/python/bubble_insertion_sort/sorted_data/'
+                    + possible_amount[len(numbers)] + '.csv')
+
+    with open(path_to_file, 'w') as f:
+        write_csv = csv.writer(f, delimiter='\n')
+        write_csv.writerow(numbers)
 
 
 def bubble_sort(numbers):
@@ -68,50 +83,13 @@ def bubble_sort(numbers):
     list of int
 
     """
-    '''
     for i in numbers:
-        for j in range(1, len(numbers)):    # i-1 so begin from 2nd element
-            if numbers[j-1] > numbers[j]:
-                numbers.insert(j, numbers.pop(j-1))
-    return numbers
-    '''
-    '''
-    length = len(numbers)
-    for i in range(length):
-        for j in range(1, len(numbers)):    # i-1 so begin from 2nd element
-            if numbers[j-1] > numbers[j]:
-                numbers.insert(j, numbers.pop(j-1))
-        length -= 1
-    return numbers
-    '''
-    '''
-    n = length(A)
-    repeat until n = 0
-        newn = 0
-        for i = 1 to n-1 inclusive do
-            if A[i-1] > A[i] then
-                swap(A[i-1], A[i])
-                newn = i
-        n = newn
-    '''
-    '''
-    n = len(numbers)
-    while n != 0:
-        newn = 0
-        for i in range(1, n):
-            if numbers[i-1] > numbers[i]:
-                numbers.insert(i, numbers.pop(i-1))
-                newn = i
-        n = newn
-    return numbers
-    '''
 
-    for passnum in range(len(numbers)-1,0,-1):
-        for i in range(passnum):
-            if numbers[i]>numbers[i+1]:
-                temp = numbers[i]
-                numbers[i] = numbers[i+1]
-                numbers[i+1] = temp
+        for j in range(1, len(numbers)):    # i-1 so begin from 2nd element
+            if numbers[j-1] > numbers[j]:
+                numbers.insert(j, numbers.pop(j-1))
+
+    return numbers
 
 
 def insertion_sort(numbers):
@@ -127,7 +105,19 @@ def insertion_sort(numbers):
     -------
     list of int
     """
-    pass
+    for i in range(1, len(numbers)):
+
+        temp_value = numbers[i]
+        temp_index = i
+
+        while temp_index > 0 and temp_value < numbers[temp_index-1]:
+            numbers[temp_index] = numbers[temp_index-1]
+            temp_index -= 1
+
+        numbers[temp_index] = temp_value
+
+    return numbers
+
 
 
 def sort_data(amount_data, sort_type='bubble'):
@@ -144,7 +134,24 @@ def sort_data(amount_data, sort_type='bubble'):
     -------
     list of int
     """
-    pass
+    numbers = read_data(amount_data)
+
+    if sort_type == 'bubble':
+        for i in numbers:
+            for j in range(1, len(numbers)):    # i-1 so begin from 2nd element
+                if numbers[j-1] > numbers[j]:
+                    numbers.insert(j, numbers.pop(j-1))
+        return numbers
+
+    elif sort_type == 'insertion':
+        for i in range(1, len(numbers)):
+            temp_value = numbers[i]
+            temp_index = i
+            while temp_index > 0 and temp_value < numbers[temp_index-1]:
+                numbers[temp_index] = numbers[temp_index-1]
+                temp_index -= 1
+            numbers[temp_index] = temp_value
+        return numbers
 
 
 def get_computing_time(amount_data, computing_type='import data'):
@@ -185,9 +192,14 @@ def print_computing_summary(computing_data):
 
 
 def main():
-    # print(read_data(10000))
-    # print(bubble_sort())
-    bubble_sort(read_data(1000)))
+    # print(read_data(1000))
+    # print(bubble_sort(read_data(1000)))
+    # print(insertion_sort(read_data(1000)))
+    # print(sort_data(1000, 'bubble'))
+    # print(sort_data(1000, 'insertion'))
+    numbers = sort_data(1000, 'bubble')
+    save_data(numbers)
+
 
 if __name__ == '__main__':
     main()
