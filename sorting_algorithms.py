@@ -84,11 +84,9 @@ def bubble_sort(numbers):
 
     """
     for i in numbers:
-
         for j in range(1, len(numbers)):    # i-1 so begin from 2nd element
             if numbers[j-1] > numbers[j]:
                 numbers.insert(j, numbers.pop(j-1))
-
     return numbers
 
 
@@ -106,7 +104,6 @@ def insertion_sort(numbers):
     list of int
     """
     for i in range(1, len(numbers)):
-
         temp_value = numbers[i]
         temp_index = i
 
@@ -115,9 +112,7 @@ def insertion_sort(numbers):
             temp_index -= 1
 
         numbers[temp_index] = temp_value
-
     return numbers
-
 
 
 def sort_data(amount_data, sort_type='bubble'):
@@ -197,7 +192,7 @@ def main():
     # print(insertion_sort(read_data(1000)))
     # print(sort_data(1000, 'bubble'))
     # print(sort_data(1000, 'insertion'))
-    numbers = sort_data(1000, 'bubble')
+    numbers = sort_data(10000, 'bubble')
     save_data(numbers)
 
 
